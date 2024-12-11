@@ -1,3 +1,8 @@
+FROM maven:3-openjdk-21 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
 # Sử dụng image của Java làm base
 FROM openjdk:21-jdk-slim
 
