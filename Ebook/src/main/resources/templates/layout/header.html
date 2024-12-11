@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Bomie Home</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#header" th:fragment="headerFragment">
+	<!-- Set the customerImage variable to null if it is currently null -->
+	<th:if test="${customerImage == null}">
+		<th:set var="customerImage" value="null" />
+	</th:if>
+
+	<div id="header-wrap">
+		<!--top-content-->
+		<div class="top-content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6"></div>
+					<div class="col-md-6">
+						<!--top-right-->
+						<div class="right-element">
+
+							<div>
+								<div th:if="${loginStatus == true}">
+									<!-- login -->
+									<div class="btn-group">
+										<div class="action-menu d-flex align-items-center">
+											<a href="/cart" class="cart for-buy text-center">
+												<i class="icon icon-clipboard"></i>
+												<span>Cart:(0 $)</span>
+											</a>
+										</div>
+										<div class="action-menu d-flex align-items-center">
+											<div class="search-bar">
+												<a href="#" class="search-button search-toggle"
+													data-selector="#header-wrap">
+													<i class="icon icon-search"></i>
+												</a>
+												<form role="search" method="get" class="search-box">
+													<input class="search-field text search-input" placeholder="Search"
+														type="search">
+												</form>
+											</div>
+										</div>
+										<div class="action-menu ps-4 d-flex align-items-center">
+											<div class="dropdown-center">
+												<img alt="user" th:src="${customerImage}" id="img-account"
+													class="rounded-circle btn border-0 m-0 text-capitalize dropdown-toggle dropdown-toggle-split"
+													data-bs-toggle="dropdown" style="width: 50px;"
+													onerror="this.src='https://lh3.google.com/u/0/d/1kOp90d7P-z6DoxExoSvcjlY1iCrWwgeh=w1920-h878-iv1'">
+												<span class="visually-hidden">Toggle Dropdown</span>
+												<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start p-3">
+													<li><a class="dropdown-item" href="account/editus">Edit profile</a>
+													</li>
+													<li><a class="dropdown-item" href="#">Order history</a></li>
+													<li>
+														<hr class="dropdown-divider">
+													</li>
+													<li><a class="dropdown-item" href="/account/logout">Logout</a></li>
+												</ul>
+											</div>
+										</div>
+										<!-- login -->
+									</div>
+								</div>
+								<div th:unless="${loginStatus == true}">
+									<!-- not login -->
+									<div class="btn-group">
+										<div class="px-1">
+											<a href="/account" class="btn btn-warning">
+												<i class="icon icon-user"></i>
+												<span>Login</span>
+											</a>
+										</div>
+										<div class="px-1">
+											<a href="/account/signup" class="btn btn-success">Join now</a>
+										</div>
+									</div>
+
+									<!-- not login -->
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+					<!--top-right-->
+				</div>
+			</div>
+		</div>
+
+		<!--top-content-->
+
+		<header id="header">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="main-logo">
+							<a th:href="@{/home}">
+								<img th:src="@{/images/Bomie.png}" alt="logo" width="150px">
+							</a>
+							</a>
+						</div>
+
+					</div>
+
+					<div class="col-md-10">
+						<nav id="navbar">
+							<div class="main-menu stellarnav">
+								<ul class="menu-list d-flex justify-content-end">
+									<li class="menu-item active d-flex align-items-center"><a
+											th:href="@{/home}">Home</a></li>
+									<li class="menu-item has-sub d-flex align-items-center">
+										<a href="#" class="nav-link">Pages</a>
+										<ul>
+											<li class="active"><a th:href="@{/home}">Home</a></li>
+										</ul>
+									</li>
+									<li class="menu-item d-flex align-items-center"><a href="#featured-books"
+											class="nav-link">Featured</a></li>
+									<!-- <li class="menu-item"><a href="#popular-books" class="nav-link">Popular</a></li>
+									<li class="menu-item"><a href="#special-offer" class="nav-link">Offer</a></li>
+									<li class="menu-item"><a href="#latest-blog" class="nav-link">Articles</a></li> -->
+								</ul>
+								<div class="hamburger">
+									<span class="bar"></span> <span class="bar"></span> <span class="bar"></span>
+								</div>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</header>
+
+	</div>
+	<!--header-wrap-->
+</body>
+
+</html>

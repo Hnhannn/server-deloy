@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Shopping Cart</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+	<link rel="stylesheet" type="text/css" href="css/vendor.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<style type="text/css">
+		@media (min-width : 1025px) {
+			.h-custom {
+				height: 100vh !important;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div th:insert="~{layout/header :: headerFragment}"></div>
+	<section class="h-100 h-custom">
+		<div class="container h-100 py-5">
+			<div class="card shadow-2-strong mb-5 mb-lg-0 px-3 py-3 bg-custom" style="border-radius: 5px;">
+				<!-- Table section -->
+				<div class="row d-flex justify-content-center align-items-center h-100">
+					<div class="col-lg-9">
+						<div class="card">
+							<div class="card-body p-4">
+								<table class="table table-responsive">
+									<thead>
+										<tr>
+											<th scope="col" class="h3">Shopping Bag</th>
+											<th scope="col">Quantity</th>
+											<th scope="col">Price</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="cartLine : ${cartLines}">
+											<td>
+												<div class="d-flex align-items-center">
+													<img th:src="@{/img/{bookImage}(bookImage=${cartLine.book.bookImage})}"
+														class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+													<div class="flex-column ms-4">
+														<p class="mb-2" th:text="${cartLine.book.title}"></p>
+													</div>
+												</div>
+											</td>
+											<td class="align-middle">
+												<div class="d-flex flex-row">
+													<!-- Kiểm tra nếu số lượng lớn hơn 0 mới hiển thị nút giảm -->
+													<a th:if="${cartLine.quantity != 1}"
+														th:href="@{/downCart/{bookId}(bookId=${cartLine.book.bookId})}">
+														<i class="fa fa-minus" aria-hidden="true"></i>
+													</a>
+													<a th:if="${cartLine.quantity == 1}" href="#"
+														onclick="return false;">
+														<i class="fa fa-minus" aria-hidden="true"
+															style="opacity: 0.5;"></i>
+													</a>
+													<input id="form1" name="quantity" th:value="${cartLine.quantity}"
+														type="text"
+														class="form-control form-control-sm text-center ms-2 me-2"
+														style="width: 50px;" readonly />
+													<a th:href="@{/addCart/{bookId}(bookId=${cartLine.book.bookId})}">
+														<i class="fa fa-plus" aria-hidden="true"></i>
+													</a>
+												</div>
+											</td>
+											<td class="align-middle">
+												<p class="mb-4">$ <span th:text="${cartLine.book.bookPrice}"></span></p>
+											</td>
+											<td>
+												<a th:href="@{/deleteCart/{bookId}(bookId=${cartLine.book.bookId})}">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- End col-lg-9 -->
+
+					<!-- Total section -->
+					<div class="col-lg-3 col-xl-3">
+						<div class="d-flex justify-content-between" style="font-weight: 500;">
+							<p class="mb-2">Subtotal</p>
+							<!-- Hiển thị Subtotal từ Model -->
+							<p class="mb-2">
+
+
+								<span th:text="${subtotal}"></span>
+							</p>
+						</div>
+
+						<div class="d-flex justify-content-between" style="font-weight: 500;">
+							<p class="mb-0">Shipping</p>
+							<!-- Hiển thị Shipping từ Model -->
+							<p class="mb-0">
+
+								<span th:text="${shippingCost}"></span>
+							</p>
+						</div>
+
+						<hr class="my-4">
+
+						<div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
+							<p class="mb-2">Total (tax included)</p>
+							<!-- Hiển thị Total từ Model -->
+							<p class="mb-2">
+								<span th:text="${total}"></span>
+							</p>
+						</div>
+
+						<button type="button" data-mdb-button-init data-mdb-ripple-init
+							class="btn btn-primary btn-block btn-lg">
+							<div class="d-flex justify-content-between">
+								<span class="pe-3"><a href="/addOrderLine" class="btn mt-0">Checkout</a></span>
+								<span class="d-flex align-items-center" th:text="${total}"></span>
+							</div>
+						</button>
+						<a href="/home" class="btn btn-primary btn-block btn-lg mt-0">Back
+							To Home</a>
+					</div>
+					<!-- End col-lg-3 -->
+				</div>
+				<!-- End row -->
+
+			</div>
+			<!-- End card -->
+		</div>
+		<!-- End container -->
+	</section>
+	<!-- End section -->
+</body>
+
+</html>
